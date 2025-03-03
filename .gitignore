@@ -1,0 +1,15 @@
+# Ignore everything inside these folders
+chroma/*
+!chroma/.gitkeep
+
+data/*
+!data/.gitkeep
+
+# Ignore virtual environment
+langchain_env/
+
+# Ignore compiled files and system-specific files
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store

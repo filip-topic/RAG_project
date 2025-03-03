@@ -1,0 +1,75 @@
+
+import numpy as np
+from langchain.schema import Document
+import os
+
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain.schema.document import Document
+from src.data_handling.document_loader import load_pdf, load_markdown
+
+def split_pdf_list(documents: list[Document]):
+    text_splitter = RecursiveCharacterTextSplitter(
+        chunk_size=1500,  
+        chunk_overlap=500,  
+        separators=["\n\n", "\n", ".", " "]  
+    )
+    return text_splitter.split_documents(documents)
+
+
+
+# splits markdown into chunks, respecting code blocks, paragraphs and sentences
+def split_markdown(text: str, chunk_size: int = 5000):
+
+    chunks = []
+    start = 0
+    text_length = len(text)
+
+    while start < text_length:
+        end = start + chunk_size
+        
+        if end >= text_length:
+            chunks.append(text[start:].strip())
+            break
+        
+        #finds code blocks
+        chunk = text[start:end]
+        code_block = chunk.rfind("```")
+        if code_block != -1 and code_block > chunk_size*0.3:
+            end = start + code_block
+
+        # tries to break at paragraphs
+        elif "\n\n" in chunk:
+            last_break = chunk.rfind("\n\n")
+            if last_break > chunk_size * 0.3:
+                end = start + last_break
+
+        elif ". " in chunk:
+            last_period = chunk.rfind(". ")
+            if last_period > chunk_size * 0.3:
+                end = start + last_period + 1
+
+        chunk = text[start:end].strip()
+        if chunk:
+            chunks.append(chunk)
+        start = max(start+1, end)
+
+    return chunks    
+    
+def test_split_pdf():
+    documents = load_pdf()
+    chunks = split_pdf_list(documents)
+    print("\n------------------ BEGIN TESTING split_documents() ------------------\n")
+    print(chunks[54])
+    print("\n------------------ END TESTING split_documents() ------------------\n")
+
+def test_split_markdown():
+    documents = load_markdown()
+    chunks = split_markdown(documents[0].page_content)
+    print("\n------------------ BEGIN TESTING split_documents() ------------------\n")
+    print(chunks[0])
+    print("\n------------------ END TESTING split_documents() ------------------\n")
+
+
+if __name__ == "__main__":
+    #test_split_pdf()
+    test_split_markdown()
