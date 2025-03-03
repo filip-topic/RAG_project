@@ -1,1 +1,6 @@
-run "$env:PYTHONPATH = "C:\Users\topco\Dokumenti\Private projects\Finance LLM project\rag_project\src"" in PS to avoid import errors
+run $env:PYTHONPATH = "C:\Users\topco\Dokumenti\Private projects\Finance LLM project\rag_project\src" in PS to avoid import errors
+run $env:PYTHONPATH = "C:\Users\topco\Dokumenti\Private projects\Finance LLM project\rag_project\config" to add config to python path
+
+ACTUALLY
+
+run $env:PYTHONPATH = "C:\Users\topco\Dokumenti\Private projects\Finance LLM project\rag_project\config;C:\Users\topco\Dokumenti\Private projects\Finance LLM project\rag_project\src" to add both src and config to python path

@@ -10,7 +10,8 @@ chunks:
     markdown: 1
 
 tokenizer:
-  model: "sentence-transformers/all-MiniLM-L6-v2
+  model: "sentence-transformers/all-MiniLM-L6-v2"
 
-llm:
-  model: "gpt-4o-mini"
+model:
+  llm: "gpt-4o-mini"
+  embedding: "text-embedding-ada-002"

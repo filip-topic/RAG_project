@@ -5,7 +5,7 @@ import requests
 from xml.etree import ElementTree
 from crawl4ai import RateLimiter
 
-from config.config import config
+from config import CONFIG
 
 
 
@@ -16,7 +16,7 @@ async def scrape_single_page(url: str = "https://www.nbcnews.com/business"):
         )
         print(result.markdown)
 
-def get_urls(url: str = config["data_source"]["website"]) -> list[str]:
+def get_urls(url: str = CONFIG["data_source"]["website"]) -> list[str]:
     sitemap_url = url + "/sitemap.xml"
     try:
         response = requests.get(sitemap_url)
@@ -42,7 +42,7 @@ rate_limiter = RateLimiter(
     rate_limit_codes=[429, 503]  # Handle these HTTP status codes
 )
 
-async def scrape_entire_page(url: str = config["data_source"]["website"]) -> list[str]:
+async def scrape_entire_page(url: str = CONFIG["data_source"]["website"]) -> list[str]:
 
     pages =[]
 

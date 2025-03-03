@@ -3,14 +3,14 @@ import asyncio
 import re
 
 from data_acquisition.web_crawler import scrape_entire_page
-from config.config import config
+from config import CONFIG
 
 
 data_path = "./data/markdown"
 #data_path = os.getcwd() +"/data/markdown"
 os.makedirs(data_path, exist_ok=True)
 
-url = config["data_source"]["website"]
+url = CONFIG["data_source"]["website"]
 
 def sanitize_filename(url):
     return re.sub(r'[<>:"/\\|?*]', '_', url)

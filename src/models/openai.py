@@ -2,7 +2,7 @@ import openai
 import os
 import json
 
-from config.config import config
+from config import CONFIG
 
 def get_one_shot_llm_response(user_prompt: str, system_prompt: str = None):
 
@@ -10,7 +10,7 @@ def get_one_shot_llm_response(user_prompt: str, system_prompt: str = None):
 
     if system_prompt:
         response = client.chat.completions.create(
-            model=config["llm"]["model"],
+            model=CONFIG["model"]["llm"],
             messages=[
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_prompt}
@@ -20,7 +20,7 @@ def get_one_shot_llm_response(user_prompt: str, system_prompt: str = None):
 
     else:
         response = client.chat.completions.create(
-        model=["llm"]["model"],
+        model=CONFIG["model"]["llm"],
         messages=[{"role": "user", "content": user_prompt}]
         )
         

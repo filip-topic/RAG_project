@@ -1,27 +1,17 @@
-import yaml
 import os
-from dotenv import load_dotenv
+import yaml
 
-# Load environment variables from .env
-load_dotenv()
+"""import sys
+print("--------")
+paths = sys.path
+for p in paths:
+    print(p)
+print("--------")"""
 
-class Config:
-    def __init__(self, config_path="config/config.yaml"):
-        with open(config_path, "r") as file:
-            self.config = yaml.safe_load(file)
+def load_config(path="config.yaml"):
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    config_path = os.path.join(base_dir, path)
+    with open(config_path, "r") as file:
+        return yaml.safe_load(file)
 
-    def get(self, key, default=None):
-        keys = key.split(".")
-        value = self.config
-        for k in keys:
-            value = value.get(k, default)
-            if value is None:
-                return default
-        return value
-
-    def get_env(self, key, default=None):
-        return os.getenv(key, default)
-
-
-# Create a global config instance
-config = Config()
+CONFIG = load_config()

@@ -1,11 +1,11 @@
 from langchain.vectorstores.chroma import Chroma
 
 from embeddings.embeddings_getter import get_embedding_function
-from config.config import config
+from config import CONFIG
 
 CHROMA_PATH ="./chroma"
 
-def retrieve_top_k_relevant_chunks(query_text: str, k=config["chunks"]["n_chunks"]["pdf"]):
+def retrieve_top_k_relevant_chunks(query_text: str, k=CONFIG["chunks"]["n_chunks"]["pdf"]):
     #prepare the database
     embedding_function = get_embedding_function()
     db = Chroma(
