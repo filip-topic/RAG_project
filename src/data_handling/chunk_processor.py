@@ -3,8 +3,7 @@ import asyncio
 
 from helpers.prompts import CHUNK_SUMMARY_AGENT_PROMPT
 from models.openai import get_one_shot_llm_response
-from data_handling.document_loader import load_markdown
-from data_handling.document_splitter import split_markdown
+
 
 @dataclass
 class ProcessedChunk:

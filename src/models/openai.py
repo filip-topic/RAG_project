@@ -2,10 +2,7 @@ import openai
 import os
 import json
 
-MODEL = "gpt-4o-mini"
-
-
-
+from config.config import config
 
 def get_one_shot_llm_response(user_prompt: str, system_prompt: str = None):
 
@@ -13,7 +10,7 @@ def get_one_shot_llm_response(user_prompt: str, system_prompt: str = None):
 
     if system_prompt:
         response = client.chat.completions.create(
-            model=MODEL,
+            model=config["llm"]["model"],
             messages=[
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_prompt}
@@ -23,7 +20,7 @@ def get_one_shot_llm_response(user_prompt: str, system_prompt: str = None):
 
     else:
         response = client.chat.completions.create(
-        model=MODEL,
+        model=["llm"]["model"],
         messages=[{"role": "user", "content": user_prompt}]
         )
         

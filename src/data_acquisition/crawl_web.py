@@ -2,14 +2,15 @@ import os
 import asyncio
 import re
 
-from src.data_acquisition.web_crawler import scrape_entire_page
+from data_acquisition.web_crawler import scrape_entire_page
+from config.config import config
 
 
 data_path = "./data/markdown"
 #data_path = os.getcwd() +"/data/markdown"
 os.makedirs(data_path, exist_ok=True)
 
-url = "https://ai.pydantic.dev"
+url = config["data_source"]["website"]
 
 def sanitize_filename(url):
     return re.sub(r'[<>:"/\\|?*]', '_', url)

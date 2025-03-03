@@ -1,0 +1,16 @@
+data_source:
+  website: "https://ai.pydantic.dev"
+
+chunks:
+  chunk_size:
+    pdf: 500
+    markdown: 5000
+  n_chunks:
+    pdf: 5
+    markdown: 1
+
+tokenizer:
+  model: "sentence-transformers/all-MiniLM-L6-v2
+
+llm:
+  model: "gpt-4o-mini"

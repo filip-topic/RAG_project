@@ -1,21 +1,21 @@
 from langchain.schema import Document
-
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain.schema.document import Document
+
 from data_handling.document_loader import load_pdf, load_markdown
+from config.config import config
 
 def split_pdf_list(documents: list[Document]):
     text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=1500,  
+        chunk_size=config["chunks"]["chunk_size"]["pdf"],  
         chunk_overlap=500,  
         separators=["\n\n", "\n", ".", " "]  
     )
     return text_splitter.split_documents(documents)
 
 
-
 # splits markdown into chunks, respecting code blocks, paragraphs and sentences
-def split_markdown(text: str, chunk_size: int = 5000):
+def split_markdown(text: str, chunk_size: int = config["chunks"]["chunk_size"]["markdown"]):
 
     chunks = []
     start = 0
@@ -52,21 +52,3 @@ def split_markdown(text: str, chunk_size: int = 5000):
 
     return chunks    
     
-def test_split_pdf():
-    documents = load_pdf()
-    chunks = split_pdf_list(documents)
-    print("\n------------------ BEGIN TESTING split_documents() ------------------\n")
-    print(chunks[54])
-    print("\n------------------ END TESTING split_documents() ------------------\n")
-
-def test_split_markdown():
-    documents = load_markdown()
-    chunks = split_markdown(documents[0].page_content)
-    print("\n------------------ BEGIN TESTING split_documents() ------------------\n")
-    print(chunks[0])
-    print("\n------------------ END TESTING split_documents() ------------------\n")
-
-
-if __name__ == "__main__":
-    #test_split_pdf()
-    test_split_markdown()
