@@ -4,9 +4,9 @@ import shutil
 from langchain.schema.document import Document
 from langchain.vectorstores.chroma import Chroma
 
-from src.data_handling.document_loader import load_pdf
-from src.data_handling.document_splitter import split_pdf_list
-from src.embeddings.embeddings_getter import get_embedding_function
+from data_handling.document_loader import load_pdf
+from data_handling.document_splitter import split_pdf_list
+from embeddings.embeddings_getter import get_embedding_function
 
 
 CHROMA_PATH = "./chroma"

@@ -1,5 +1,5 @@
 from langchain.vectorstores.chroma import Chroma
-from src.embeddings.embeddings_getter import get_embedding_function
+from embeddings.embeddings_getter import get_embedding_function
 
 CHROMA_PATH ="./chroma"
 
