@@ -26,12 +26,6 @@ def get_title_and_summary(chunk: str):
         print(f"Error getting title and summary: {e}")
         return {"title": "Error processing title", "summary": "Error processing summary"}
     
-def test_get_title_and_summary():
-    print("\n------------------ BEGIN TESTING get_title_and_summary() ------------------\n")
-    document = load_markdown()
-    chunk = split_markdown(document[1].page_content)[0]
-    print(get_title_and_summary(chunk))
-    print("\n------------------ END TESTING get_title_and_summary() ------------------\n")
-    
-#test_get_title_and_summary()   #WORKS
+
+
 

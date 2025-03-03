@@ -1,7 +1,4 @@
-
-import numpy as np
 from langchain.schema import Document
-import os
 
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain.schema.document import Document
