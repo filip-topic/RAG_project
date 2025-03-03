@@ -79,24 +79,3 @@ async def scrape_entire_page(url: str = "https://ai.pydantic.dev") -> list[str]:
     
     return pages
     
-def test_get_urls():
-    urls = get_urls()
-    print("--------------- BEGIN get_urls() TESTING --------------------")
-    for i, url in enumerate(urls):
-        print(f"URL {i}: " + url)
-        print("-----")
-    print("--------------- END get_urls() TESTING --------------------")
-
-async def test_scrape_entire_page():
-    pages = await scrape_entire_page()
-    print("--------------- BEGIN scrape_entire_page() TESTING --------------------")
-    print(pages[0])
-    print("--------------- END scrape_entire_page() TESTING --------------------")
-    pass
-
-
-if __name__ == "__main__":
-    #asyncio.run(scrape_single_page())
-    #test_get_urls()   #WORKS
-    asyncio.run(test_scrape_entire_page())
-    pass

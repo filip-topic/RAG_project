@@ -5,7 +5,7 @@ import os
 
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain.schema.document import Document
-from src.data_handling.document_loader import load_pdf, load_markdown
+from data_handling.document_loader import load_pdf, load_markdown
 
 def split_pdf_list(documents: list[Document]):
     text_splitter = RecursiveCharacterTextSplitter(
