@@ -1,19 +1,5 @@
-from dataclasses import dataclass
-import asyncio
-
 from helpers.prompts import CHUNK_SUMMARY_AGENT_PROMPT
 from models.openai import get_one_shot_llm_response
-
-
-@dataclass
-class ProcessedChunk:
-    url: str
-    chunk_number: int
-    title: str
-    summary: str
-    content: str
-    metadata: dict[str, any]
-    embedding: list[float]
 
 def get_title_and_summary(chunk: str):
 

@@ -1,13 +1,6 @@
 import os
 import yaml
 
-"""import sys
-print("--------")
-paths = sys.path
-for p in paths:
-    print(p)
-print("--------")"""
-
 def load_config(path="config.yaml"):
     base_dir = os.path.dirname(os.path.abspath(__file__))
     config_path = os.path.join(base_dir, path)
