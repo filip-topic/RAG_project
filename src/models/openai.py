@@ -1,15 +1,15 @@
-import openai
+from openai import AsyncOpenAI
 import os
 import json
 
 from config import CONFIG
 
-def get_one_shot_llm_response(user_prompt: str, system_prompt: str = None):
+async def get_one_shot_llm_response(user_prompt: str, system_prompt: str = None):
 
-    client = openai.OpenAI(api_key=os.getenv("OPENAI_API"))
+    client = AsyncOpenAI(api_key=os.getenv("OPENAI_API"))
 
     if system_prompt:
-        response = client.chat.completions.create(
+        response = await client.chat.completions.create(
             model=CONFIG["model"]["llm"],
             messages=[
                 {"role": "system", "content": system_prompt},
@@ -19,7 +19,7 @@ def get_one_shot_llm_response(user_prompt: str, system_prompt: str = None):
         )
 
     else:
-        response = client.chat.completions.create(
+        response = await client.chat.completions.create(
         model=CONFIG["model"]["llm"],
         messages=[{"role": "user", "content": user_prompt}]
         )

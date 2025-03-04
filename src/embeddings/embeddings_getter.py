@@ -1,5 +1,5 @@
 from langchain.embeddings import HuggingFaceEmbeddings
-import openai
+from openai import AsyncOpenAI
 import os
 
 from config import CONFIG
@@ -8,10 +8,11 @@ def get_embedding_function():
     embeddings = HuggingFaceEmbeddings(model_name=CONFIG["tokenizer"]["model"])
     return embeddings
 
-def get_embeddings(text: str) -> list[float]:
-    openai.api_key = os.getenv("OPENAI_API")
+async def get_embeddings(text: str) -> list[float]:
+    client = AsyncOpenAI(api_key=os.getenv("OPENAI_API"))
+    
     try:
-        response = openai.embeddings.create(
+        response = await client.embeddings.create(
             input = text,
             model = CONFIG["model"]["embedding"]
         )

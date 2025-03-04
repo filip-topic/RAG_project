@@ -1,18 +1,17 @@
-from dataclasses import dataclass
 from supabase import create_client, Client
-import supabase
+import os
+from dotenv import load_dotenv
 
-@dataclass
-class ProcessedChunk:
-    url: str
-    chunk_number: int
-    title: str
-    summary: str
-    content: str
-    metadata: dict[str, any]
-    embedding: list[float]
+from data_handling.chunk_processor import ProcessedChunk
 
-def insert_chunk(chunk: ProcessedChunk):
+load_dotenv()
+
+supabase: Client = create_client(
+    os.getenv("SUPABASE_URL"),
+    os.getenv("SUPABASE_SERVICE_KEY")
+)
+
+async def insert_chunk(chunk: ProcessedChunk):
     try:
         data = {
             "url": chunk.url,
