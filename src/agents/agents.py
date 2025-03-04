@@ -27,7 +27,7 @@ simple_agent = Agent(
 )
 
 @simple_agent.tool
-async def retrieve_relevant_documentation(ctx: RunContext[PydanticAIDeps], user_query: str) -> str:
+async def retrieve_relevant_chunks(ctx: RunContext[PydanticAIDeps], user_query: str) -> str:
     """
     Retrieve relevant documentation chunks based on the query with RAG.
     
@@ -40,7 +40,7 @@ async def retrieve_relevant_documentation(ctx: RunContext[PydanticAIDeps], user_
     """
 
     try:
-        query_embedding = await get_embeddings(user_query, ctx.deps.openai_client)
+        query_embedding = await get_embeddings(user_query)
 
         result = ctx.deps.supabase.rpc(
             'match_site_pages',
@@ -53,6 +53,20 @@ async def retrieve_relevant_documentation(ctx: RunContext[PydanticAIDeps], user_
 
         if not result.data:
             return "No relevant documentation found."
+    
+        # Format the results
+        formatted_chunks = []
+        for doc in result.data:
+            chunk_text = f"""
+                # {doc['title']}
+
+                {doc['content']}
+                """
+            formatted_chunks.append(chunk_text)
+            
+        # Join all chunks with a separator
+        return "\n\n---\n\n".join(formatted_chunks)
         
     except Exception as e:
-        pass
+        print(f"Error retrieving documentation: {e}")
+        return f"Error retrieving documentation: {str(e)}"
