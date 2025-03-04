@@ -7,7 +7,6 @@ import os
 from src.information_retreival.information_retreiver import retrieve_top_k_relevant_chunks, test_ir
 from src.models.openai import get_one_shot_llm_response
 #from database import populate_chroma_database
-from src.data_handling.document_splitter import test_split_pdf
 from src.helpers.prompts import BASIC_RAG_PROMPT
 
 CHROMA_PATH = "./chroma"
@@ -45,7 +44,4 @@ def query_rag(query_text: str):
 #main()
 
 if __name__ == "__main__":
-    #test_ir()  #WORKS
-    #query_rag("What was the revenue in 2023?")   #WORKS
-    test_split_pdf(method="document_specific")
-    pass
+    main()
