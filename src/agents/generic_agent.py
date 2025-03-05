@@ -6,6 +6,7 @@ for path in sys.path:
 
 from pydantic_ai.models.openai import OpenAIModel
 from pydantic_ai import Agent, ModelRetry, RunContext
+from pydantic import BaseModel
 import logfire
 from dataclasses import dataclass
 from openai import AsyncOpenAI
@@ -13,7 +14,7 @@ from supabase import Client
 import os
 
 from config import CONFIG
-from helpers.prompts import RAG_AGENT_SYSTEM_PROMPT
+from helpers.prompts import MAIN_AGENT_SYSTEM_PROMPT
 from embeddings.embeddings_getter import get_embeddings
 
 
@@ -22,18 +23,21 @@ logfire.configure(send_to_logfire="if-token-present")
 
 # step n1 in creating agent: agent dependancies
 @dataclass
-class PydanticAIDeps:
+class PydanticAIDeps(BaseModel):
     supabase: Client
     openai_client: AsyncOpenAI
 
-simple_agent = Agent(
+    class Config:
+         arbitrary_types_allowed = True
+
+generic_agent = Agent(
     model,
-    system_prompt = RAG_AGENT_SYSTEM_PROMPT,
+    system_prompt = MAIN_AGENT_SYSTEM_PROMPT,
     deps_type = PydanticAIDeps,
     retries = 2
 )
 
-@simple_agent.tool
+@generic_agent.tool
 async def retrieve_relevant_chunks(ctx: RunContext[PydanticAIDeps], user_query: str) -> str:
     """
     Retrieve relevant chunks based on the query with RAG.
@@ -78,7 +82,7 @@ async def retrieve_relevant_chunks(ctx: RunContext[PydanticAIDeps], user_query: 
         print(f"Error retrieving documentation: {e}")
         return f"Error retrieving documentation: {str(e)}"
     
-@simple_agent.tool
+@generic_agent.tool
 async def list_documentation_pages(ctx: RunContext[PydanticAIDeps]) -> list[str]:
     
     f"""
@@ -105,7 +109,7 @@ async def list_documentation_pages(ctx: RunContext[PydanticAIDeps]) -> list[str]
         print(f"Error retrieving documentation pages: {e}")
         return []
     
-@simple_agent.tool
+@generic_agent.tool
 async def get_page_content(ctx: RunContext[PydanticAIDeps], url: str) -> str:
     """
     Retrieve the full content of a specific page by combining all its chunks.

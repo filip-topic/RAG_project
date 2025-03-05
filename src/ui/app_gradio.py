@@ -10,7 +10,7 @@ from httpx import AsyncClient
 from openai import AsyncOpenAI
 
 # Import the agent and its dependency class
-from agents.agents import simple_agent, PydanticAIDeps
+from agents.generic_agent import generic_agent, PydanticAIDeps
 
 # pydantic-ai Tools for streaming
 from pydantic_ai.messages import ToolCallPart, ToolReturnPart
@@ -53,7 +53,7 @@ async def stream_from_agent(prompt: str, chatbot: list[dict], past_messages: lis
     yield gr.Textbox(interactive=False, value=''), chatbot, gr.skip()
 
     # Run your custom agent in "stream" mode so you can yield partial tokens.
-    async with simple_agent.run_stream(
+    async with generic_agent.run_stream(
         prompt, deps=deps, message_history=past_messages
     ) as result:
         for message in result.new_messages():
