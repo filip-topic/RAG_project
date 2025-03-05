@@ -6,6 +6,7 @@ from urllib.parse import urlparse
 from helpers.prompts import CHUNK_SUMMARY_AGENT_PROMPT
 from models.openai import get_one_shot_llm_response
 from embeddings.embeddings_getter import get_embeddings
+from config.config import CONFIG
 
 @dataclass
 class ProcessedChunk:
@@ -34,7 +35,7 @@ async def process_chunk(chunk: str, chunk_number: int, url: str) -> ProcessedChu
     embedding = await get_embeddings(chunk)
 
     metadata = {
-        "source":"___",
+        "source": CONFIG["data_source"]["website"],
         "chunk_size": len(chunk),
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "url": urlparse(url).path
